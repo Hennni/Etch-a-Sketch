@@ -3,10 +3,87 @@
 <html>
 
 
-    
+    <head>
 
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+        <title>Etch-a-Sketch</title>
 
+    </head>
 
+    <body>
+        <button id = resetBtn>Reset</button>
+
+        <div id="container"></div>
+
+    </body>
+
+    <script>
+        const container = document.getElementById("container");
+        let reset = document.getElementById("resetBtn");  
+
+       blankCanvas(16, 1);
+
+       function generateGridContainer(n1) {
+            const gridContainer = document.createElement('div');
+            gridContainer.classList.add('grid-container');
+
+            return gridContainer;
+        }
+            
+
+        function blankCanvas(n1, j) {
+            let cellSize = Math.round((960 / n1) - 1);
+            let rowWidth = cellSize * n1;
+            let cellPx = cellSize + "px";
+            let rowPx = n1 + "px";
+            const gridContainer = generateGridContainer(n1)
+        
+            for (var i = 0; i < n1; i++) {
+                const row = document.createElement("div");
+                let rowSize = Math.round((960 / n1) - 1);
+                let rowPx = rowSize + "px";
+                row.style.height = rowPx;
+                row.style.width = rowWidth;
+                for(k = 0; k < n1; k++) {
+                    let gridsquare = generateGridItem(i,k);
+                    row.appendChild(gridsquare);
+                }
+            gridContainer.appendChild(row);
+            }
+
+            container.appendChild(gridContainer);
+
+            function generateGridItem() {
+                let gridsquare = document.createElement("div");
+                gridsquare.className = "newGridSquare";
+                gridsquare.style.height = cellPx;
+                gridsquare.style.width = cellPx;
+                gridsquare.addEventListener("mouseover", function() {
+                gridsquare.classList.add("changeColor");
+                });
+                return gridsquare;
+            };
+        
+
+        };
+
+        function clearGrid() {
+            while (container.firstChild) {
+                container.removeChild(container.lastChild);
+            }
+        }
+        
+        function resetGrid() {
+            let n1 = prompt('Please Enter a number (n) to create a canvas of size nxn');
+            let j = 1 
+            clearGrid();
+            blankCanvas(n1, j);
+        }
+
+        reset.addEventListener("click", resetGrid);
+
+    </script>
 
 
 
